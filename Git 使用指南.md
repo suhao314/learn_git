@@ -371,6 +371,7 @@ $ git switch -c dev										# 创建并切换到 dev 分支
 
 ```bash
 $ git branch
+# 当前所在分支前以 * 标记
 ```
 
 #### 删除分支
