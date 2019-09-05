@@ -398,5 +398,81 @@ $ git merge branchName
 
 ```bash
 $ git status
+# 该命令会提示有哪些文件存在冲突
+$ cat fileName
+#		查看存在冲突的文件，如下：
+#
+#		Git is a distributed version control system.
+#		Git is free software distributed under the GPL.
+#		Git has a mutable index called stage.
+#		Git tracks changes of files.
+#		<<<<<<< HEAD
+#		Creating a new branch is quick & simple.
+#		=======
+#		Creating a new branch is quick AND simple.
+#		>>>>>>> feature1
+#
+```
+
+#### 解决冲突
+
+由自己决定保留谁，并手动修改，完成修改后：
+
+```bash
+$ git add fileName
+$ git commit -m "conflist fixed"
+```
+
+![git-br-conflict-merged](Git 使用指南.assets/0-1567671500624.png)
+
+解决完冲突后，可删除 `feature1` 分支
+
+```bash
+$ git branch -d feature1
+```
+
+#### 查看分支合并情况
+
+```bash
+$ git log --graph --pretty=oneline --abbrev-commit
+```
+
+### 分支管理策略
+
+`master` 分支仅用于发布新版本，不应该在其上干活
+
+开发应该在 `dev` 分支上，开发完成后合并分支到 `master` 分支
+
+### `stash` 功能
+
+#### 应用场景
+
+当前正在 `dev` 分支上开发，但 `commit` 尚需一段时间（此时尚不能 `commit`）
+
+紧急修bug时，使用该功能把当前工作现场暂存起来，待修完bug后恢复并继续工作
+
+```bash
+$ git stash
+$ git checkout master										 # 切换至 master 分支修bug
+$ git checkout -b issue-bug101						# 创建用于修 bug 的分支
+# fixxing bug101
+$ git add .
+$ git commit -m "bug101 fixed"
+$ git checkout master										# 切换回 master 分支，以合并新的修改
+$ git merge --no-ff -m "merged bug fix 101" issue-bug101
+
+$ git checkout dev
+
+$ git stash list														# 检查是否有 stash 内容						
+
+# 恢复
+$ git stash apply													# 恢复（此时不会删除stash）
+$ git stash drop													 # 删除 stash
+# 或者
+$ git stash pop														  # 恢复并删除stash，相当于以上两条指令
+
+
+# 在 dev 分支上也修复同样的 bug ，假定 bug101 fixed 分支的 commit ID 为 4c805e2
+$ git cherry-pick 4c805e2
 ```
 
