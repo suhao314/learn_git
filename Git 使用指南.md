@@ -326,7 +326,7 @@ $ git clone https://github.com/QSCTech/zju-icicles.git
 
 ### 创建与合并分支
 
-每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即 `master` 分支。 `HEAD` 严格来说不是指向提交，而是指向 `master`，`master` 才是指向提交的，所以，`HEAD` 指向的就是当前分支。
+每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即 `master` 分支。 `HEAD` 严格来说不是指向提交，而是指向 `master`，`master` 才是指向提交的，所以，**`HEAD` 指向的就是当前分支**。
 
 一开始的时候，`master` 分支是一条线，Git用 `master` 指向最新的提交，再用 `HEAD` 指向 `master`，就能确定当前分支，以及当前分支的提交点：
 
@@ -344,7 +344,7 @@ Git创建一个分支很快，因为除了增加一个`dev`指针，改改`HEAD`
 
 ![git-br-dev-fd](Git 使用指南.assets/0-1564262530109.png)
 
-假如我们在`dev`上的工作完成了，就可以把`dev`合并到`master`上。最简单的方法，就是直接把`master`指向`dev`的当前提交，就完成了合并：
+假如我们在 `dev` 上的工作完成了，就可以把 `dev` 合并到 `master` 上。最简单的方法，就是直接把 `master` 指向 `dev` 的当前提交，就完成了合并：
 
 ![git-br-ff-merge](Git 使用指南.assets/0-1564262548337.png)
 
@@ -358,5 +358,44 @@ Git创建一个分支很快，因为除了增加一个`dev`指针，改改`HEAD`
 
 ```bash
 $ git checkout -b dev
+# 相当于如下两条指令
+$ git branch dev										# 创建 dev 分支
+$ git checkout dev									 # 切换到 dev 分支
+
+# 切换或创建分支时推荐使用 switch
+$ git switch branchName						 # 切换分支
+$ git switch -c dev										# 创建并切换到 dev 分支
+```
+
+#### 查看当前分支
+
+```bash
+$ git branch
+```
+
+#### 删除分支
+
+```bash
+$ git branch -d dev									# 删除 dev 分支
+```
+
+#### 合并 `branchName` 分支到当前分支
+
+```bash
+# 假定当前在 master 分支
+$ git merge branchName
+# 将 branchName 分支合并到当前所在的 master 分支
+```
+
+### 解决冲突
+
+![git-br-feature1](Git 使用指南.assets/0-1567670339270.png)
+
+在 `master` 分支下无法讲 `feature1` 分支快速合并进来，因为可能存在冲突
+
+#### 检查冲突
+
+```bash
+$ git status
 ```
 
