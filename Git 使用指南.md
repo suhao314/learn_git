@@ -176,9 +176,10 @@ $ git commit -m "understand how stage works"
 
 #### 丢弃工作区的修改
 
-让这个文件回到最近一次 `git commit` 或 `git add` 时的状态
+*让文件 `readme.txt` 回到最近一次 `git commit` 或 `git add` 时的状态*
 
-* `readme.txt` 自修改后还没有被放到暂存区 `stage` (还没有 `git add`)，现在，撤销修改就回到和版本库一模一样的状态
+`readme.txt` 自修改后还没有被放到暂存区 `stage` (还没有 `git add`)，现在，撤销修改就回到和版本库一模一样的状态
+
 * `readme.txt` 已经添加到暂存区 `stage` (已经 `git add`) 后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态 
 
 ```bash
